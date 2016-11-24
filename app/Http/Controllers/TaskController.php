@@ -133,12 +133,15 @@ class TaskController extends Controller{
 
     //模板使用
     public function section1(){
+        $tasks = Tasks::get();
+        //$tasks = [];
         $name = "kingsleo";
         $arr = ['kingsleo','zly'];
         return view('tasks.section1',
             [
                 'name'=>$name,
-                'arr' => $arr
+                'arr' => $arr,
+                'tasks' => $tasks
             ]
             );
     }
