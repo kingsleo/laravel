@@ -130,4 +130,16 @@ class TaskController extends Controller{
         $num = Tasks::where('id','>',8)->delete();
         var_dump($num);
     }
+
+    //模板使用
+    public function section1(){
+        $name = "kingsleo";
+        $arr = ['kingsleo','zly'];
+        return view('tasks.section1',
+            [
+                'name'=>$name,
+                'arr' => $arr
+            ]
+            );
+    }
 }

@@ -54,6 +54,7 @@ Route::get('orm1','TaskController@orm1');
 Route::get('orm2','TaskController@orm2');
 Route::get('orm3','TaskController@orm3');
 Route::get('orm4','TaskController@orm4');
+Route::get('section1','TaskController@section1');
 //Route::get('member/info',['uses'=>'MemberController@info','as'=>'memberinfo']);
 /*
 |--------------------------------------------------------------------------
