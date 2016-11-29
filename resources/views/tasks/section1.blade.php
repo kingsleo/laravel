@@ -57,4 +57,10 @@
     @empty
         null
     @endforelse
+    <br>
+    <a href="{{ url('url1') }}">url()</a>
+    <br>
+    <a href="{{ action('TaskController@urlTest') }}">action()</a>
+    <br>
+    <a href="{{ route('url2') }}">route()</a>
 @stop

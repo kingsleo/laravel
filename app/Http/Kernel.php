@@ -35,7 +35,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
         ],
     ];
-
+    //注册中间件
     /**
      * The application's route middleware.
      *
@@ -48,5 +48,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'activity' => \App\Http\Middleware\Activity::class,
     ];
 }

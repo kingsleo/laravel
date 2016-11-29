@@ -55,6 +55,22 @@ Route::get('orm2','TaskController@orm2');
 Route::get('orm3','TaskController@orm3');
 Route::get('orm4','TaskController@orm4');
 Route::get('section1','TaskController@section1');
+Route::get('url1',['as'=>'url2','uses'=>'TaskController@urlTest']);
+Route::any('task/request1',['uses'=>'TaskController@request1']);
+Route::any('response',['uses'=>'TaskController@response']);
+
+//宣传页面，不用放到中间件里面验证
+Route::any('activity0',['uses'=>'TaskController@activity0']);
+//活动页面
+Route::group(['middleware'=>['activity']],function(){
+    Route::any('activity1',['uses'=>'TaskController@activity1']);
+    Route::any('activity2',['uses'=>'TaskController@activity2']);
+});
+Route::group(['middleware'=>['web']],function(){
+    Route::any('session1',['uses'=>'TaskController@session1']);
+    Route::any('session2',['as'=>'session2','uses'=>'TaskController@session2']);
+});
+
 //Route::get('member/info',['uses'=>'MemberController@info','as'=>'memberinfo']);
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +85,10 @@ Route::get('section1','TaskController@section1');
 
 Route::group(['middleware' => ['web']], function () {
     //
+    Route::any('student/index',['uses'=>'StudentController@index']);
+    Route::any('student/create',['uses'=>'StudentController@create']);
+    Route::any('student/save',['uses'=>'StudentController@save']);
+    Route::any('student/update/{id}',['uses'=>'StudentController@update']);
+    Route::any('student/detail/{id}',['uses'=>'StudentController@detail']);
+    Route::any('student/delete/{id}',['uses'=>'StudentController@delete']);
 });
