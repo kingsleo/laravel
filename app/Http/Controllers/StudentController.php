@@ -2,6 +2,10 @@
 namespace App\Http\Controllers;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Mail\MailServiceProvider;
+use Illuminate\Support\Facades\Cache;
+use Mail;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller{
     public function index(){
@@ -116,5 +120,68 @@ class StudentController extends Controller{
         }else{
             return redirect('student/index')->with('error','删除失败');
         }
+    }
+
+    public function upload(Request $request){
+        if($request->isMethod('post')){
+            $file = $request->file('file');
+            //文件是否上传成功
+            if($file->isValid()){
+                //原文件名
+                $originalName = $file->getClientOriginalName();
+                //扩展名
+                $ext = $file->getClientOriginalExtension();
+                //Mimetype
+                $type = $file->getClientMimeType();
+                //临时绝对路径
+                $realPath = $file->getRealPath();
+                $filename = date('Y-m-d-H-i-s').'-'.uniqid().'.'.$ext;
+                $bool = Storage::disk('uploads')->put($filename,file_get_contents($realPath));
+                var_dump($bool);
+            }
+        }
+        return view('student.upload');
+    }
+
+    public function mail(){
+        //发送纯文本文件
+        Mail::raw('邮件内容 测试',function($message){
+            $message->from('json_vip@162.com','慕课网');
+            $message->subject('邮件主题 测试');
+            $message->to('76727998@qq.com');
+        });
+
+        //发送html
+        Mail::send('student.mail',['name'=>'kingsleo'],function($message){
+            $message->to('76727998@qq.com');
+        });
+    }
+
+    public function cache1(){
+        //put()
+        //Cache::put('key1','val1',10);
+        //add()
+        //$bool = Cache::add('key2','val2',10);
+        //forever()
+        //Cache::forever('key3','val3');
+        //has()
+        if(Cache::has('key11')){
+            $val = Cache::get('key1');
+            var_dump($val);
+        }else{
+            echo "no";
+        }
+
+    }
+
+    public function cache2(){
+        //get()
+        $val = Cache::get('key3');
+        var_dump($val);
+        //pull()    取出并删除
+        $val = Cache::pull('key3');
+        var_dump($val);
+        //forget()  删除
+        $bool = Cache::forget('key3');
     }
 }

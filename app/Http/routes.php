@@ -58,6 +58,10 @@ Route::get('section1','TaskController@section1');
 Route::get('url1',['as'=>'url2','uses'=>'TaskController@urlTest']);
 Route::any('task/request1',['uses'=>'TaskController@request1']);
 Route::any('response',['uses'=>'TaskController@response']);
+Route::any('upload',['uses'=>'StudentController@upload']);
+Route::any('mail',['uses'=>'StudentController@mail']);
+Route::any('cache1',['uses'=>'StudentController@cache1']);
+Route::any('cache2',['uses'=>'StudentController@cache2']);
 
 //宣传页面，不用放到中间件里面验证
 Route::any('activity0',['uses'=>'TaskController@activity0']);
@@ -91,4 +95,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('student/update/{id}',['uses'=>'StudentController@update']);
     Route::any('student/detail/{id}',['uses'=>'StudentController@detail']);
     Route::any('student/delete/{id}',['uses'=>'StudentController@delete']);
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
 });
